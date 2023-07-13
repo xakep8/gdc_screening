@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "version": "0.0.0",
+  "name": "gdc-task",
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "jest": "^27.3.1"
+  },
+  "scripts": {
+    "test": "jest",
+    "prepare": "husky install ./.husky"
+  },
+  "dependencies": {
+    "minimist": "^1.2.8"
+  }
+}
