@@ -14,9 +14,8 @@ const proc = args[0];
 var tasks = [];
 
 function displayableString(tasks) {
-  const list = tasks.map((task) => {
-    let priority = `[${task[1]}]`;
-    return `${task[0]} ${priority}`;
+  var list = tasks.map((task) => {
+    return `${task[0]} ${task[1]}`;
   });
   return list;
 }
@@ -40,9 +39,7 @@ switch (proc) {
     });
     tasks.push([args[1], args[2]]);
     tasks.sort((a, b) => a[0] - b[0]);
-    var list = tasks.map((task) => {
-      return `${task[0]} ${task[1]}`;
-    });
+    var list = displayableString(tasks);
     fs.writeFileSync("task.txt", "");
     list.forEach(async (task) => {
       fs.appendFileSync("task.txt", task, (err) => {
