@@ -10,7 +10,7 @@ if (!exists) {
   fs.writeFileSync("completed.txt", "");
 }
 
-const proc = args._[0];
+const proc = args[0];
 var tasks = [];
 
 function displayableString(tasks) {
@@ -23,7 +23,7 @@ function displayableString(tasks) {
 
 switch (proc) {
   case "add":
-    if (args._[1] === undefined || args._[2] === undefined) {
+    if (args[1] === undefined || args[2] === undefined) {
       console.log("Error: Missing tasks string. Nothing added!");
     }
     var data = fs.readFileSync("task.txt", "utf8", {
@@ -38,7 +38,7 @@ switch (proc) {
       const title = task.substring(task.indexOf(" ") + 1);
       tasks.push([priority, title]);
     });
-    tasks.push([args._[1], args._[2]]);
+    tasks.push([args[1], args[2]]);
     tasks.sort((a, b) => a[0] - b[0]);
     var list = tasks.map((task) => {
       return `${task[0]} ${task[1]}`;
@@ -52,7 +52,7 @@ switch (proc) {
         if (err) throw err;
       });
     });
-    console.log(`Added task: "${args._[2]}" with priority ${args._[1]}`);
+    console.log(`Added task: "${args[2]}" with priority ${args[1]}`);
     break;
   case "ls":
     var data = fs.readFileSync("task.txt", "utf8", {
@@ -75,7 +75,7 @@ switch (proc) {
     });
     break;
   case "del":
-    var idx = args._[1];
+    var idx = args[1];
     if (idx === undefined) {
       console.log("Error: Missing NUMBER for deleting tasks.");
       break;
@@ -105,7 +105,7 @@ switch (proc) {
     }
     break;
   case "done":
-    var idx = args._[1];
+    var idx = args[1];
     if (idx === undefined) {
       console.log("Error: Missing NUMBER for marking tasks as done.");
       break;
