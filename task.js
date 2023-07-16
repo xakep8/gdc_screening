@@ -27,6 +27,11 @@ switch (proc) {
   case "add":
     if (args[2] === undefined || args[3] === undefined) {
       console.log("Error: Missing tasks string. Nothing added!");
+      break;
+    }
+    if(parseInt(args[2])<0){
+      console.log("Error: Priority should be an integer greater than or equal to 0");
+      break;
     }
     var data = fs.readFileSync(`${path}/task.txt`, "utf8", {
       encoding: "utf8",
@@ -61,6 +66,7 @@ switch (proc) {
     });
     if (data.length === 0) {
       console.log("There are no pending tasks!");
+      break;
     }
     var list = data.split("\n");
     list.pop();
@@ -90,6 +96,7 @@ switch (proc) {
       console.log(
         `Error: task with index #${idx} does not exist. Nothing deleted.`,
       );
+      break;
     } else {
       list.splice(idx - 1, 1);
       fs.writeFileSync(`${path}/task.txt`, "");
@@ -124,6 +131,7 @@ switch (proc) {
     });
     if (idx > list.length || idx == 0) {
       console.log(`Error: no incomplete item with index #${idx} exists.`);
+      break;
     } else {
       var temp = tasks[idx - 1];
       list.splice(idx - 1, 1);
