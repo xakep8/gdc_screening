@@ -10,26 +10,6 @@ Here's how it should work when you're done:
 
 [![TASK-CLI](https://res.cloudinary.com/sv-co/image/upload/v1638058186/GDC/SE/Admission/gdc-home-page_b6s3go.png)](https://vimeo.com/648902045)
 
-## Getting started
-
-1. Install Node.js: You need to have npm installed in your computer for this problem. It comes with Node.js and you can get it by installing Node from https://nodejs.org/en/
-
-2. You are expected to write the code in `task.js` file.
-
-3. Once you are done with the changes you should be able to execute the task app by running the following command from the terminal.
-
-   **On Windows:**
-
-   ```
-   .\task.bat
-   ```
-
-   **On \*nix:**
-
-   ```
-   ./task.sh
-   ```
-
 ## Run Automated Tests
 
 ### 1. Install Node.js
@@ -40,33 +20,7 @@ You need to have npm installed in your computer for this problem. It comes with 
 
 Run `npm install` to install all dependencies.
 
-### 3. Create Create symbolic link to the executable file
-
-#### On Windows
-
-To create a symbolic link on Windows, you'll need to run either the Windows Command Prompt, or Windows Powershell **with administrator privileges**. To do so, right-click on the icon for Command Prompt, or Powershell, and choose the _"Run as Administrator"_ option.
-
-**Command Prompt:**
-
-```
-> mklink task task.bat
-```
-
-**Powershell:**
-
-```
-> cmd /c mklink task task.bat
-```
-
-#### On \*nix:
-
-Run the following command in your shell:
-
-```
-$ ln -s task.sh task
-```
-
-### 4. Try running tests.
+### 3. Try running tests.
 
 Now run `npm test` and you will see all the tests failing. As you fill in each functionality, you can re-run the tests to see them passing one by one.
 

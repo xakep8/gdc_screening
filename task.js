@@ -1,16 +1,19 @@
 const fs = require("fs");
 const args = process.argv.slice(2);
-var exists = fs.existsSync("task.txt");
+var path=args[0];
+console.log(path);
+
+var exists = fs.existsSync(`${path}/task.txt`);
 if (!exists) {
-  fs.writeFileSync("task.txt", "");
+  fs.writeFileSync(`${path}/task.txt`, "");
 }
 
-var exists = fs.existsSync("completed.txt");
+var exists = fs.existsSync(`${path}/completed.txt`);
 if (!exists) {
-  fs.writeFileSync("completed.txt", "");
+  fs.writeFileSync(`${path}/completed.txt`, "");
 }
 
-const proc = args[0];
+const proc = args[1];
 var tasks = [];
 
 function displayableString(tasks) {
@@ -22,10 +25,10 @@ function displayableString(tasks) {
 
 switch (proc) {
   case "add":
-    if (args[1] === undefined || args[2] === undefined) {
+    if (args[2] === undefined || args[3] === undefined) {
       console.log("Error: Missing tasks string. Nothing added!");
     }
-    var data = fs.readFileSync("task.txt", "utf8", {
+    var data = fs.readFileSync(`${path}/task.txt`, "utf8", {
       encoding: "utf8",
       flag: "r",
     });
@@ -37,22 +40,22 @@ switch (proc) {
       const title = task.substring(task.indexOf(" ") + 1);
       tasks.push([priority, title]);
     });
-    tasks.push([args[1], args[2]]);
+    tasks.push([args[2], args[3]]);
     tasks.sort((a, b) => a[0] - b[0]);
     var list = displayableString(tasks);
-    fs.writeFileSync("task.txt", "");
+    fs.writeFileSync(`${path}/task.txt`, "");
     list.forEach(async (task) => {
-      fs.appendFileSync("task.txt", task, (err) => {
+      fs.appendFileSync(`${path}/task.txt`, task, (err) => {
         if (err) throw err;
       });
-      fs.appendFileSync("task.txt", "\n", (err) => {
+      fs.appendFileSync(`${path}/task.txt`, "\n", (err) => {
         if (err) throw err;
       });
     });
-    console.log(`Added task: "${args[2]}" with priority ${args[1]}`);
+    console.log(`Added task: "${args[3]}" with priority ${args[2]}`);
     break;
   case "ls":
-    var data = fs.readFileSync("task.txt", "utf8", {
+    var data = fs.readFileSync(`${path}/task.txt`, "utf8", {
       encoding: "utf8",
       flag: "r",
     });
@@ -72,12 +75,12 @@ switch (proc) {
     });
     break;
   case "del":
-    var idx = args[1];
+    var idx = args[2];
     if (idx === undefined) {
       console.log("Error: Missing NUMBER for deleting tasks.");
       break;
     }
-    var data = fs.readFileSync("task.txt", "utf8", {
+    var data = fs.readFileSync(`${path}/task.txt`, "utf8", {
       encoding: "utf8",
       flag: "r",
     });
@@ -89,12 +92,12 @@ switch (proc) {
       );
     } else {
       list.splice(idx - 1, 1);
-      fs.writeFileSync("task.txt", "");
+      fs.writeFileSync(`${path}/task.txt`, "");
       list.forEach(async (task) => {
-        fs.appendFileSync("task.txt", task, (err) => {
+        fs.appendFileSync(`${path}/task.txt`, task, (err) => {
           if (err) throw err;
         });
-        fs.appendFileSync("task.txt", "\n", (err) => {
+        fs.appendFileSync(`${path}/task.txt`, "\n", (err) => {
           if (err) throw err;
         });
       });
@@ -102,12 +105,12 @@ switch (proc) {
     }
     break;
   case "done":
-    var idx = args[1];
+    var idx = args[2];
     if (idx === undefined) {
       console.log("Error: Missing NUMBER for marking tasks as done.");
       break;
     }
-    var data = fs.readFileSync("task.txt", "utf8", {
+    var data = fs.readFileSync(`${path}/task.txt`, "utf8", {
       encoding: "utf8",
       flag: "r",
     });
@@ -124,19 +127,19 @@ switch (proc) {
     } else {
       var temp = tasks[idx - 1];
       list.splice(idx - 1, 1);
-      fs.writeFileSync("task.txt", "");
+      fs.writeFileSync(`${path}/task.txt`, "");
       list.forEach(async (task) => {
-        fs.appendFileSync("task.txt", task, (err) => {
+        fs.appendFileSync(`${path}/task.txt`, task, (err) => {
           if (err) throw err;
         });
-        fs.appendFileSync("task.txt", "\n", (err) => {
+        fs.appendFileSync(`${path}/task.txt`, "\n", (err) => {
           if (err) throw err;
         });
       });
-      fs.appendFileSync("completed.txt", temp[1], (err) => {
+      fs.appendFileSync(`${path}/completed.txt`, temp[1], (err) => {
         if (err) throw err;
       });
-      fs.appendFileSync("completed.txt", "\n", (err) => {
+      fs.appendFileSync(`${path}/completed.txt`, "\n", (err) => {
         if (err) throw err;
       });
       console.log(`Marked item as done.`);
@@ -160,7 +163,7 @@ switch (proc) {
     console.log("$ ./task report               # Statistics");
     break;
   case "report":
-    var data = fs.readFileSync("task.txt", "utf8", {
+    var data = fs.readFileSync(`${path}/task.txt`, "utf8", {
       encoding: "utf8",
       flag: "r",
     });
@@ -176,7 +179,7 @@ switch (proc) {
     tasks.forEach((task, idx) => {
       console.log(`${idx + 1}. ${task[1]} [${task[0]}]`);
     });
-    var data = fs.readFileSync("completed.txt", "utf8", {
+    var data = fs.readFileSync(`${path}/completed.txt`, "utf8", {
       encoding: "utf8",
       flag: "r",
     });

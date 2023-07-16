@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
-node task.js "$@"
+cwd=$(pwd)
+dir=$(dirname "$0")
+# echo $cwd
+node "$dir/task.js" "$cwd" "$@"
