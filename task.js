@@ -1,7 +1,7 @@
 const fs = require("fs");
 const args = process.argv.slice(2);
 var path=args[0];
-console.log(path);
+// console.log(path);
 
 var exists = fs.existsSync(`${path}/task.txt`);
 if (!exists) {
